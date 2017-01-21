@@ -1,21 +1,21 @@
 # InvokeV Container
 
-InvokeV Container provides completely new virtual machine clone management and enables more faster and more small on your familiar Hyper-V.
+InvokeV Container provides container virtual machine clone management and enables more faster and more small footprint VMs on your familiar Hyper-V environment.
+InvokeV Container enables linked clone similar feature on your Hyper-V environment.
 
 ## Feature
 * Enables following virtual machine recycle process with easy way. 
   create, dispose, imaging
 * Enables minimize container image using vhdx differencial file technology
-* Windows、NanoServer、LinuxなどHyper-VがサポートしているOSが利用可能。
-* NanoServerのイメージを利用することで、より速く、より小さくを実現。
-* Hyper-V上のネットワーク、セキュリティーなど仮想マシンと同様の仕様で利用が可能。
-* 既存の仮想マシンとHyper-V上で混在利用が可能。
-* コンテナイメージを自身で作成。
+* All OS supported by HyperV can available (Windows,NanoServer,Linux...etc)
+* If you use NanoServer image for base, deployment enables more faster and more small footprint virtual machine.
+* It can be used in the same specifications as the virtual machine, such as network and security on Hyper-V.
+* Existing virtual machines with Hyper-v on mixed use is possible.
+* Create a container image yourself.
 * Enables both PowerShell and GUI tool management
 * Enables GUI tool management via Remote desktop
 * Enables create new image by combine parent's container image and child container image
 * This container doesn't concern with Windows container and Docer container. 
-
 
 
 ## Supported Environment
@@ -25,24 +25,26 @@ Windows 10 Hyper-V
   
   
 ## Install
- [InvokeVContainer.psm1](/InvokeVContainer.psm1) と [Setup.ps1](/Setup.ps1) を同一のフォルダにダウンロードします。  
-  
- ダウンロードしたスクリプトでセキュリティー警告が出る場合があるので、スクリプトをアンロックします。  
+1.Download the following files on same folder [InvokeVContainer.psm1](/InvokeVContainer.psm1) , [Setup.ps1](/Setup.ps1) 
+If you recieve the security alert, unlock these scripts.  
  
     PS C:\Users\Administrator\Downloads> Unblock-File .\Setup.ps1   
      
-レポジトリを作成するパスを指定してSetup.ps1 を実行します。  
+2.Execute Setup.ps1 with repository path.
 
     PS C:\Users\Administrator\Downloads> .\Setup.ps1 "D:\"
 
-指定したパス配下に「InvokeVContainer」フォルダ（この場合はD:\InvokeVContainer）が作成され、InvokeVContainer.psm1ファイルが、「C:\Users\Administrator\Documents\WindowsPowerShell\Modules\InvokeVContainer\InvokeVContainer.psm1」にコピーされます。（Administratorでログインしている場合）  
+ Under the targeted path "InvokeVContainer" folder (example D:\InvokeVContainer) was created.
+ InvoleVContainer.psm1 file were copyed to the following path. 
+"C:\Users\(logined user name)\Documents\WindowsPowerShell\Modules\InvokeVContainer\InvokeVContainer.psm1"
 
-※Windowsコンテナの「Docker-PowerShell」のPowerShellモジュールがインストールされている場合は、Uninstall-Module Docker および、Remove-Module Docker　を実行してDocker-PowerShellを削除する必要があります。  
-※InvokeVContainer.psm1に変更を加えた場合は、「Remove-Module *」を実行してモジュールの再読み込が必要です。  
-※アンインストールは レポジトリフォルダと、InvokeVContainer.psm1を削除します。  
+Note:
+- If you have already installed Docker-PowerShell of Windows container, you need uninstall Docker-PowerShell with the command "Uninstall-Module Docker" or "Remove-Module Docker".
+- If you change InvokeVContainer.psm1, You shold reload the module with command "Remove-Module *"
+- When you Uninstall, just delete repositry folder and InvokeVContainer.psm1 file.
   
   
-## Confirmation commands 
+## Confirmation Commands 
 
     > Get-Command -Module InvokeVContainer
 
@@ -69,15 +71,15 @@ Windows 10 Hyper-V
     Function        Wait-ContainerBoot                                 0.0        InvokeVContainer               
   
   
-## Base container image
-コンテナイメージとなるのは、OSがインストール済みの仮想マシンのvhdxファイルです。イメージとしてインポートを実行します。  
+## Base Container Virtual Machine Image
+Base Container Virtual Machine is OS installed vhdx file. vhdx file were import as a Virtual Machine Image.   
 
     > Import-ContainerImage -FilePath "D:\Hyper-V\Win2016\Win2016.vhdx"
 
-vhdxファイルにGUIDを割当てたファイルが、「D:\InvokeVContainer\Images」にコピーされます。（ファイルサイズによってはしばらく時間がかかります。）   
+GUID assigned to vhdx file were copied to D:\InvokeVContainer\Imageg (This process takes time depends on its vhdx file size)
+
   
-  
-## Confirmation container image
+## Confirmation Container Virtual Machine Image
 
     > Get-ContainerImage
 
@@ -104,17 +106,18 @@ vhdxファイルにGUIDを割当てたファイルが、「D:\InvokeVContainer\I
 
     > New-Container -ContainerName "CON_01" -ImageName "Win2016" -Memory 2048MB -Processer 1 -SwitchName "NAT"
 
--SwithName　で指定する仮想スイッチはあらかじめHyper-Vマネージャーで作成したものを指定しています。  
-New-NetNatコマンドで作成したNAT仮想スイッチも利用できますが、IPアドレスは個別に割り当てる必要があります。  
+-SwithName: Virtual switch name created with Hyper-V manager.
+When you use NAT virtual switch created with New-NetNat command, IP address assignment is needed. 
 
     > Run-Container -ContainerName "CON_01" -ImageName "Win2016" -Memory 2048MB -Processer 1 -SwitchName "NAT" -IPAddress 172.16.0.1 -Subnet 255.255.255.240 -Gateway 172.16.0.254 -DNS 8.8.8.8
 
-Run-Containerコマンドを使うと、コンテナの作成～起動～IPアドレスの設定まで一度に行うことができます。  
-※IPアドレスの割当はコンテナイメージのOSが統合サービスに対応している場合のみ。  　
-  
-  
-## コンテナの確認：
+If you use Run-Container command, you can easy to execute following steps (create container virtual image, run container virtual image, configuration IP address).
 
+Note:
+IP address assignment were only available with Container Virtual Machine Image supported by OS integrated services.
+  
+  
+## Confirm Container Virtual Machine:
 
     > Get-Container
 
@@ -123,24 +126,24 @@ Run-Containerコマンドを使うと、コンテナの作成～起動～IPア�
     CON_01 Running D:\InvokeVContainer\Containers\CON_01\CON_01.vhdx D:\InvokeVContainer\Images\Win2016__2110bc02-d624-4c78-879b-dd6f5601fabc.vhdx
   
   
-## コンテナの起動：
+## Start Container Virtual Machine:
 
     > Start-Container "CON_01" 
   
   
-## コンテナの停止：
+## Stop Container Virtual Machine:
 
     > Stop-Container "CON_01" 
   
   
-## コンテナに接続：
+## Connect Container Virtual Machine:
 
     > vmconnect (hostname) "CON_01" 
 
-Hyper-Vマネージャーからと同様に、vmconnext.exe を利用してコンテナに接続します。  
+Connect container Virtual Machine via vmconnect.exe similar way from Hyper-V manager.
     
   
-## 最初のコンテナイメージの作成：
+## Create New Container Virtual Machine Image:
 
     > New-ContainerImage -ContainerName "CON_01" -ImageName "IMG_01" 
 
@@ -150,7 +153,7 @@ Hyper-Vマネージャーからと同様に、vmconnext.exe を利用してコ�
 新しく作成されたコンテナイメージから、さらにコンテを作成、コンテナイメージを作成・・・  
   
   
-## コンテナイメージの結合：
+## Merge Container Virtual Machine Image:
 
     > Merge-ContainerImage -ImageName "IMG_01" -NewImageName "MyNewIMG_01"
  
@@ -158,7 +161,7 @@ Hyper-Vマネージャーからと同様に、vmconnext.exe を利用してコ�
 結合前の親子ファイルは削除されず、関連したコンテナもそのまま残されます。  
   
   
-## コンテナイメージの削除：
+## Delete Container Virtual MachineImage:
 
     > Remove-ContainerImage "IMG_01"
   

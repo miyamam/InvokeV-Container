@@ -147,18 +147,17 @@ Connect container Virtual Machine via vmconnect.exe similar way from Hyper-V man
 
     > New-ContainerImage -ContainerName "CON_01" -ImageName "IMG_01" 
 
-作成したコンテナからコンテナイメージを作成します。  
-コンテナが起動中でも、停止中でもコンテナイメージを作成することが可能です。  
-作成されたコンテナイメージは、コンテナの親イメージファイルの子ファイル（差分ファイル）となっています。  
-新しく作成されたコンテナイメージから、さらにコンテを作成、コンテナイメージを作成・・・  
+Create New Container Virtual Machine from created first Container Virtual Machine Image.
+This process doesn't depend on if Container Virtual Machine is running or not running.
+Created Container Virtual Image is child file (differential file) of parent virtual machine image file.
   
   
 ## Merge Container Virtual Machine Image:
 
     > Merge-ContainerImage -ImageName "IMG_01" -NewImageName "MyNewIMG_01"
  
-親子関係のコンテナイメージファイルを結合して、新しいコンテナイメージを作成します。  
-結合前の親子ファイルは削除されず、関連したコンテナもそのまま残されます。  
+You can merge container virtual machine image and create new container virtual machine image.
+Related container virtual machine file and pre-merged both parent and child file left.  
   
   
 ## Delete Container Virtual MachineImage:
@@ -167,10 +166,10 @@ Connect container Virtual Machine via vmconnect.exe similar way from Hyper-V man
   
   
 ## InvokeV Container Manager：
-[InvokeV Container Manager](/InvokeVContainerManager.exe) は、PowerShellのコマンドをGUIを使って実行することで、視覚的にコンテナの操作管理が可能となります。  
-コンテナでは、ファイルの親子関係が多岐にわたるため、構成を把握するためにも有用なツールとなっています。  
-基本的な操作はアイコンをマウスの右クリックしてから始めるようになっています。  
-※管理者権限にて実行する必要があります。
+[InvokeV Container Manager](/InvokeVContainerManager.exe) is enables visualized GUI contaner management with PowerShell Command.
+Because Container has complicate parent-child file relationship, this tool is usuful to manage its relationship.
+Basical operation starts right mouse click.
+Note: You need Administrative privilege
 ![Invoke VContainer Manager](./images/cap.png "Invoke VContainer Manager")
 
 

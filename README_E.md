@@ -1,21 +1,21 @@
 # InvokeV Container
 
-InvokeV Container provides container virtual machine clone management and enables more faster and more small footprint VMs on your familiar Hyper-V environment.
-InvokeV Container enables linked clone similar feature on your Hyper-V environment.
+InvokeV Container provides container virtual machine clone management and enables faster and smaller footprint VMs on your familiar Hyper-V environment.
+InvokeV Container enables a linked clone feature on similar to your Hyper-V environment.
 
 ## Feature
-* Enables following virtual machine recycle process with easy way. 
+* Enables following virtual machine recycle process with ease. 
   create, dispose, imaging
 * Enables minimize container image using vhdx differencial file technology
-* All OS supported by HyperV can available (Windows,NanoServer,Linux...etc)
-* If you use NanoServer image for base, deployment enables more faster and more small footprint virtual machine.
+* All OS supported by HyperV can be available (Windows,NanoServer,Linux...etc)
+* If you use NanoServer image for base, deployment enables faster and smaller footprint virtual machine.
 * It can be used in the same specifications as the virtual machine, such as network and security on Hyper-V.
 * Existing virtual machines with Hyper-v on mixed use is possible.
 * Create a container image yourself.
 * Enables both PowerShell and GUI tool management
 * Enables GUI tool management via Remote desktop
-* Enables create new image by combine parent's container image and child container image
-* This container doesn't concern with Windows container and Docer container. 
+* Enables create new image by combining parent's container image and child container image
+* This container isn't concerned with Windows container and Docer container. 
 
 
 ## Supported Environment
@@ -26,7 +26,7 @@ Windows 10 Hyper-V
   
 ## Install
 1.Download the following files on same folder [InvokeVContainer.psm1](/InvokeVContainer.psm1) , [Setup.ps1](/Setup.ps1) 
-If you recieve the security alert, unlock these scripts.  
+If you recieve a security alert, unlock these scripts.  
  
     PS C:\Users\Administrator\Downloads> Unblock-File .\Setup.ps1   
      
@@ -39,8 +39,8 @@ If you recieve the security alert, unlock these scripts.
 "C:\Users\(logined user name)\Documents\WindowsPowerShell\Modules\InvokeVContainer\InvokeVContainer.psm1"
 
 Note:
-- If you have already installed Docker-PowerShell of Windows container, you need uninstall Docker-PowerShell with the command "Uninstall-Module Docker" or "Remove-Module Docker".
-- If you change InvokeVContainer.psm1, You shold reload the module with command "Remove-Module *"
+- If you have already installed Windows's container Docker-PowerShell, you need to uninstall Docker-PowerShell with the command "Uninstall-Module Docker" or "Remove-Module Docker".
+- If you change InvokeVContainer.psm1, You should reload the module with command "Remove-Module *"
 - When you Uninstall, just delete repositry folder and InvokeVContainer.psm1 file.
   
   
@@ -72,7 +72,7 @@ Note:
   
   
 ## Base Container Virtual Machine Image
-Base Container Virtual Machine is OS installed vhdx file. vhdx file were import as a Virtual Machine Image.   
+Base Container Virtual Machine was OS installed vhdx files. vhdx file were import as a Virtual Machine Image.   
 
     > Import-ContainerImage -FilePath "D:\Hyper-V\Win2016\Win2016.vhdx"
 
@@ -111,10 +111,10 @@ When you use NAT virtual switch created with New-NetNat command, IP address assi
 
     > Run-Container -ContainerName "CON_01" -ImageName "Win2016" -Memory 2048MB -Processer 1 -SwitchName "NAT" -IPAddress 172.16.0.1 -Subnet 255.255.255.240 -Gateway 172.16.0.254 -DNS 8.8.8.8
 
-If you use Run-Container command, you can easy to execute following steps (create container virtual image, run container virtual image, configuration IP address).
+If you use Run-Container command, you can easily execute the following steps (create container virtual image, run container virtual image, configuration IP address).
 
 Note:
-IP address assignment were only available with Container Virtual Machine Image supported by OS integrated services.
+IP address assignment is only available with Container Virtual Machine Image supported by OS integrated services.
   
   
 ## Confirm Container Virtual Machine:
@@ -140,7 +140,7 @@ IP address assignment were only available with Container Virtual Machine Image s
 
     > vmconnect (hostname) "CON_01" 
 
-Connect container Virtual Machine via vmconnect.exe similar way from Hyper-V manager.
+Connect container Virtual Machine via vmconnect.exe similar way as Hyper-V manager.
     
   
 ## Create New Container Virtual Machine Image:
@@ -148,7 +148,7 @@ Connect container Virtual Machine via vmconnect.exe similar way from Hyper-V man
     > New-ContainerImage -ContainerName "CON_01" -ImageName "IMG_01" 
 
 Create New Container Virtual Machine from created first Container Virtual Machine Image.
-This process doesn't depend on if Container Virtual Machine is running or not running.
+This process doesn't depend on if the Container Virtual Machine is running or not running.
 Created Container Virtual Image is child file (differential file) of parent virtual machine image file.
   
   
@@ -156,8 +156,8 @@ Created Container Virtual Image is child file (differential file) of parent virt
 
     > Merge-ContainerImage -ImageName "IMG_01" -NewImageName "MyNewIMG_01"
  
-You can merge container virtual machine image and create new container virtual machine image.
-Related container virtual machine file and pre-merged both parent and child file left.  
+You can merge a container virtual machine image and create a new container virtual machine image.
+Retaining the container virtual machine file and both the pre-merged parent and child files.  
   
   
 ## Delete Container Virtual MachineImage:
@@ -166,9 +166,9 @@ Related container virtual machine file and pre-merged both parent and child file
   
   
 ## InvokeV Container Manager：
-[InvokeV Container Manager](/InvokeVContainerManager.exe) is enables visualized GUI contaner management with PowerShell Command.
-Because Container has complicate parent-child file relationship, this tool is usuful to manage its relationship.
-Basical operation starts right mouse click.
+[InvokeV Container Manager](/InvokeVContainerManager.exe) enables visualized GUI contaner management with PowerShell Command.
+Because Container has complicated parent-child file relationship, this tool is usuful to manage its relationship.
+Basic operation starts with a right mouse click.
 Note: You need Administrative privilege
 ![Invoke VContainer Manager](./images/cap.png "Invoke VContainer Manager")
 

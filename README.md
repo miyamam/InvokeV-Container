@@ -175,3 +175,7 @@ Note: You need Administrative privilege
 
 ## InvokeV Container Overview：
 <a href="https://youtu.be/FElIdcLgcdY" target="_blank">InvokeV Container Overview (YouTube)</a>
+
+
+> **Note** This is translated repo of [Invoke V Container](https://github.com/InvokeV/InvokeV-Container)
+Copylight (C) 2016 Katsuichi Higuchi a.k.a Invoke V
